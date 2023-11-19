@@ -4,10 +4,10 @@ export const IndividualData = ({individualData,index}) => {
     return (
         <tr>
             <th>{index}</th>
-            <th>{individualData.name}</th>
-            <th>{individualData.age}</th>
-            <th>{individualData.designation}</th>
-            <th>{individualData.salary}</th>
+            <th>{individualData.Name} </th>
+            <th>{individualData.Age}</th>
+            <th>{individualData.Destignation}</th>
+            <th>{individualData.Salary}</th>
         </tr>
     )
 }

@@ -7,7 +7,7 @@ function App() {
   // form states
   const [name, setName]=useState('');
   const [age, setAge]=useState('');
-  const [designation, setDesignation]=useState('');
+  const [destignation, setDestignation]=useState('');
   const [salary, setSalary]=useState('');
 
   // retrived data state
@@ -20,28 +20,33 @@ function App() {
 
     // our object to pass
     const data = {
-      name,age,designation,salary
+      Name:name,
+      Age:age,
+      Destignation:destignation,
+      Salary:salary,
     }
-    axios.post('https://sheet.best/api/sheets/e7a8bead-e947-4de5-9421-8e17433a3fff',data).then(response=>{
-      // console.log(response);
+    axios.post('https://sheet.best/api/sheets/2cf5fbf5-0ec3-44ce-b534-21b7a58460a6',data).then(response=>{
+      console.log(response);
       setName('');
       setAge('');
-      setDesignation('');
+      setDestignation('');
       setSalary('');
     })
   }
 
   // getting data function
   const getData=()=>{
-    axios.get('https://sheet.best/api/sheets/e7a8bead-e947-4de5-9421-8e17433a3fff').then((response)=>{
+    axios.get('https://sheet.best/api/sheets/2cf5fbf5-0ec3-44ce-b534-21b7a58460a6').then((response)=>{
       setData(response.data);
+      console.log(response.data)
     })
   }
 
   // triggering function
   useEffect(()=>{
+    if (data.length) return
     getData();
-  },[data])
+  },[])
 
   return (
     <div className="container">
@@ -62,11 +67,11 @@ function App() {
           value={age}
         />
         <br></br>
-        <label>Designation</label>
+        <label>Destignation</label>
         <input type='text' className='form-control' required
           placeholder='Enter your designation'
-          onChange={(e)=>setDesignation(e.target.value)}
-          value={designation}
+          onChange={(e)=>setDestignation(e.target.value)}
+          value={destignation}
         />
         <br></br>
         <label>Salary</label>
@@ -90,7 +95,7 @@ function App() {
                   <th scope='col'>Index</th>
                   <th scope='col'>Name</th>
                   <th scope='col'>Age</th>
-                  <th scope='col'>Designation</th>
+                  <th scope='col'>Destignation</th>
                   <th scope='col'>Salary</th>
                 </tr>
               </thead>
