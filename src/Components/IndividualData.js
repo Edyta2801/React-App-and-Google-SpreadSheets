@@ -5,10 +5,9 @@ export const IndividualData = ({individualData,index}) => {
         <tr>
             <th>{index}</th>
             <th>{individualData.Category} </th>
-            <th>{individualData.Name} </th>
-            <th>{individualData.Age}</th>
-            <th>{individualData.Destignation}</th>
-            <th>{individualData.Salary}</th>
+            <th>{individualData.Expense} </th>
+            <th>{individualData.Amount}</th>
+            <th>{individualData.ExpenseType}</th>
         </tr>
     )
 }

@@ -14,11 +14,10 @@ function App() {
 
   // form states
   // const [expense, setExpense]=useState(0);
-  const [selectedCategory, setSelectedCategory]=useState('')
-  const [name, setName]=useState('');
-  const [age, setAge]=useState('');
-  const [destignation, setDestignation]=useState('');
-  const [salary, setSalary]=useState('');
+  const [selectedCategory, setSelectedCategory]=useState('jedzenie')
+  const [expense, setExpense]=useState('');
+  const [amount, setAmount]=useState('');
+  const [expenseType, setExpenseType]=useState('');;
 
   // retrived data state
   const [data, setData]=useState([]);
@@ -32,18 +31,16 @@ function App() {
     const data = {
       // ExpenseValue:expense,
       Category:selectedCategory,
-      Name:name,
-      Age:age,
-      Destignation:destignation,
-      Salary:salary,
+      Expense:expense,
+      Amount:amount,
+      ExpenseType:expenseType,
     }
     axios.post('https://sheet.best/api/sheets/2cf5fbf5-0ec3-44ce-b534-21b7a58460a6',data).then(response=>{
       console.log(response);
       setSelectedCategory('');
-      setName('');
-      setAge('');
-      setDestignation('');
-      setSalary('');
+      setExpense('');
+      setAmount('');
+      setExpenseType('');
     })
   }
 
@@ -63,7 +60,7 @@ function App() {
 
  const expenses=15000;
 const current = new Date().toLocaleDateString('pl-PL',{month:'long'});
-const expenseType={
+const expense_Type={
   oneTime:'one',
   fixed:'fixed'
 }
@@ -86,40 +83,29 @@ const expenseType={
       className='form-control' required
         value={selectedCategory}
           onChange={e => setSelectedCategory(e.target.value)}>
-        {/* <option value="jedzenie">Jedzenie</option>
-        <option value="dom">Dom</option>
-        <option value="zdrowie">Zdrowie</option>
-        <option value="inne">Inne</option> */}
         {categories.map(item => {
                   return (<option key={item.value} value={item.value}>{item.label}</option>);
               })}
       </select>
         </label>
         <br></br>
-        <label>Name</label>
+        <label>Wydatek</label>
         <input type='text' className='form-control' required
-          placeholder='Enter your name' onChange={(e)=>setName(e.target.value)}
-          value={name}
+          placeholder='Wydatek' onChange={(e)=>setExpense(e.target.value)}
+          value={expense}
         />
         <br></br>
-        <label>Age</label>
-        <input type='text' className='form-control' required
-          placeholder='Enter your age' onChange={(e)=>setAge(e.target.value)}
-          value={age}
+        <label>Amount</label>
+        <input type='number' className='form-control' required
+          placeholder='Kwota' onChange={(e)=>setAmount(e.target.value)}
+          value={amount}
         />
         <br></br>
-        <label>Destignation</label>
+        <label>ExpenseType</label>
         <input type='text' className='form-control' required
-          placeholder='Enter your designation'
-          onChange={(e)=>setDestignation(e.target.value)}
-          value={destignation}
-        />
-        <br></br>
-        <label>Salary</label>
-        <input type='text' className='form-control' required
-          placeholder='Enter your salary'
-          onChange={(e)=>setSalary(e.target.value)}
-          value={salary}
+          placeholder='Wydatek powtarza się'
+          onChange={(e)=>setExpenseType(e.target.value)}
+          value={expenseType}
         />
         <br></br>
         <div style={{display:"flex"}}>
@@ -134,10 +120,10 @@ const expenseType={
               <thead>
                 <tr>
                   <th scope='col'>Index</th>
-                  <th scope='col'>Name</th>
-                  <th scope='col'>Age</th>
-                  <th scope='col'>Destignation</th>
-                  <th scope='col'>Salary</th>
+                  <th scope='col'>Category</th>
+                  <th scope='col'>Expense</th>
+                  <th scope='col'>Amount</th>
+                  <th scope='col'>Expense Type</th>
                 </tr>
               </thead>
               <tbody>
