@@ -14,39 +14,32 @@ const current = new Date().toLocaleDateString('pl-PL',{month:'long'});
 
 function App() {
 
-  // form states
-  // const [expense, setExpense]=useState(0);
   const [selectedCategory, setSelectedCategory]=useState('jedzenie')
   const [expense, setExpense]=useState('');
   const [amount, setAmount]=useState('');
-  const [expenseType, setExpenseType]=useState(true);
+  const [repetitive, setRepetitive]=useState(false);
 
-  // retrived data state
   const [data, setData]=useState([]);
 
-  // submit event
   const handleSubmit=(e)=>{
     e.preventDefault();
-    // console.log(name, age, designation, salary);
+    console.log(`repetitive:${repetitive}`);
 
-    // our object to pass
     const data = {
-      // ExpenseValue:expense,
       Category:selectedCategory,
       Expense:expense,
       Amount:amount,
-      ExpenseType:expenseType,
+      Repetitive:repetitive,
     }
     axios.post('https://sheet.best/api/sheets/2cf5fbf5-0ec3-44ce-b534-21b7a58460a6',data).then(response=>{
       console.log(response);
       setSelectedCategory('');
       setExpense('');
       setAmount('');
-      setExpenseType('');
+      setRepetitive('');
     })
   }
 
-  // getting data function
   const getData=()=>{
     axios.get('https://sheet.best/api/sheets/2cf5fbf5-0ec3-44ce-b534-21b7a58460a6').then((response)=>{
       setData(response.data);
@@ -54,14 +47,13 @@ function App() {
     })
   }
 
-  // triggering function
+
   useEffect(()=>{
     if (data.length) return
     getData();
   },[])
-
- const handleChange=()=>setExpenseType((prev) => !prev)
-
+  
+ 
   return (
     <div className="container">
       <div className='main'>
@@ -92,25 +84,17 @@ function App() {
           value={expense}
         />
         <br></br>
-        <label>Amount</label>
+        <label>Kwota</label>
         <input type='number' className='form-control' required
           placeholder='Kwota' onChange={(e)=>setAmount(e.target.value)}
           value={amount}
         />
         <br></br>
-        {/* <label>ExpenseType</label>
-        <input type='text' className='form-control' required
-          placeholder='Wydatek powtarza się'
-          onChange={(e)=>setExpenseType(e.target.value)}
-          value={expenseType}
-        /> */}
-        <br></br>
-       
         <label>Wydatek powtarza się</label>
-        <input type='checkbox' checked={expenseType}  label='Wydatek powtarza się' onChange={handleChange}
+        <input type='checkbox' checked={repetitive} label='Wydatek powtarza się' 
+        onChange={(e)=>setRepetitive(e.target.checked)}
         />
         <br></br>
-
         <div style={{display:"flex"}}>
           <button  style={{width:'100%'}} type='submit' className='btn btn-primary'>Submit</button>
         </div>
@@ -126,7 +110,7 @@ function App() {
                   <th scope='col'>Category</th>
                   <th scope='col'>Expense</th>
                   <th scope='col'>Amount</th>
-                  <th scope='col'>Expense Type</th>
+                  <th scope='col'>Repetitive</th>
                 </tr>
               </thead>
               <tbody>
