@@ -2,11 +2,19 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Data} from './Components/Data'
 
+const categories = [
+  {value: 'jedzenie', label:'Jedzenie'   },
+  {value: 'dom', label:'Dom'},
+  {value: 'zdrowie', label: 'Zdrowie'  },
+  {value: 'inne', label: 'Inne'  }
+];
+
+
 function App() {
 
   // form states
   // const [expense, setExpense]=useState(0);
-  const [selectedCategory, setSelectedCategory]=useState('jedzenie')
+  const [selectedCategory, setSelectedCategory]=useState('')
   const [name, setName]=useState('');
   const [age, setAge]=useState('');
   const [destignation, setDestignation]=useState('');
@@ -64,7 +72,7 @@ const expenseType={
     <div className="container">
       <div className='main'>
       <br></br>
-      <button   type='submit' className='btn btn-primary'>{expenses}</button>
+      <button type='submit' className='btn btn-primary'>{expenses}</button>
       <br></br>
       <hr></hr>
       <label color='blue'style={{width:'100%', size:'huge'}}>{current}</label>
@@ -76,13 +84,15 @@ const expenseType={
         <select 
       type='text' 
       className='form-control' required
-        
         value={selectedCategory}
           onChange={e => setSelectedCategory(e.target.value)}>
-        <option value="jedzenie">Jedzenie</option>
+        {/* <option value="jedzenie">Jedzenie</option>
         <option value="dom">Dom</option>
         <option value="zdrowie">Zdrowie</option>
-        <option value="inne">Inne</option>
+        <option value="inne">Inne</option> */}
+        {categories.map(item => {
+                  return (<option key={item.value} value={item.value}>{item.label}</option>);
+              })}
       </select>
         </label>
         <br></br>
