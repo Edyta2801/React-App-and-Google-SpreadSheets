@@ -9,6 +9,8 @@ const categories = [
   {value: 'inne', label: 'Inne'  }
 ];
 
+const expenses=15000;
+const current = new Date().toLocaleDateString('pl-PL',{month:'long'});
 
 function App() {
 
@@ -17,7 +19,7 @@ function App() {
   const [selectedCategory, setSelectedCategory]=useState('jedzenie')
   const [expense, setExpense]=useState('');
   const [amount, setAmount]=useState('');
-  const [expenseType, setExpenseType]=useState('');;
+  const [expenseType, setExpenseType]=useState(true);
 
   // retrived data state
   const [data, setData]=useState([]);
@@ -58,12 +60,7 @@ function App() {
     getData();
   },[])
 
- const expenses=15000;
-const current = new Date().toLocaleDateString('pl-PL',{month:'long'});
-const expense_Type={
-  oneTime:'one',
-  fixed:'fixed'
-}
+ const handleChange=()=>setExpenseType((prev) => !prev)
 
   return (
     <div className="container">
@@ -101,13 +98,19 @@ const expense_Type={
           value={amount}
         />
         <br></br>
-        <label>ExpenseType</label>
+        {/* <label>ExpenseType</label>
         <input type='text' className='form-control' required
           placeholder='Wydatek powtarza się'
           onChange={(e)=>setExpenseType(e.target.value)}
           value={expenseType}
+        /> */}
+        <br></br>
+       
+        <label>Wydatek powtarza się</label>
+        <input type='checkbox' checked={expenseType}  label='Wydatek powtarza się' onChange={handleChange}
         />
         <br></br>
+
         <div style={{display:"flex"}}>
           <button  style={{width:'100%'}} type='submit' className='btn btn-primary'>Submit</button>
         </div>
