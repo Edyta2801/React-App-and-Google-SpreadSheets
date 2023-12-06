@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react'
+import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import {Data} from './Components/Data'
 
@@ -9,7 +9,6 @@ const categories = [
   {value: 'inne', label: 'Inne'  }
 ];
 
-const expenses=15000;
 const current = new Date().toLocaleDateString('pl-PL',{month:'long'});
 
 function App() {
@@ -21,8 +20,20 @@ function App() {
 
   const [data, setData]=useState([]);
 
+  const [items, setItems] = useState([]);
+  const [totalAmount, setTotalAmount]=useState([0])
+
   const handleSubmit=(e)=>{
     e.preventDefault();
+    
+    const amount = parseInt(e.target.elements.amount.value);
+    if (isNaN(amount)) {
+      return;
+    }
+
+    const newItem = { amount: amount };
+    setItems([...items, newItem]);
+
     console.log(`repetitive:${repetitive}`);
 
     const data = {
@@ -47,19 +58,32 @@ function App() {
     })
   }
 
-
   useEffect(()=>{
     if (data.length) return
     getData();
   },[])
-  
- 
+
+  const updateTotalAmount = () => {
+    const total = items.reduce((acc, item) => acc + item.amount, 0);
+    setTotalAmount(total);
+  };
+
+  React.useEffect(() => {
+    updateTotalAmount();
+  }, [items]);
+
+
   return (
     <div className="container">
       <div className='main'>
       <br></br>
-      <button type='submit' className='btn btn-primary'>{expenses}</button>
+      <button type='submit' className='btn btn-primary'>Wydatki: {totalAmount}</button>
       <br></br>
+      {/* <ul>
+        {items.map((item) => (
+          <li key={item.amount}>{item.amount}</li>
+        ))}
+      </ul> */}
       <hr></hr>
       <label color='blue'style={{width:'100%', size:'huge'}}>{current}</label>
       </div>
@@ -80,13 +104,15 @@ function App() {
         <br></br>
         <label>Wydatek</label>
         <input type='text' className='form-control' required
-          placeholder='Wydatek' onChange={(e)=>setExpense(e.target.value)}
+          placeholder='Wydatek'
+           onChange={(e)=>setExpense(e.target.value)}
           value={expense}
         />
         <br></br>
         <label>Kwota</label>
-        <input type='number' className='form-control' required
-          placeholder='Kwota' onChange={(e)=>setAmount(e.target.value)}
+        <input type='number' className='form-control' name='amount' required
+          placeholder='Kwota' 
+          onChange={(e)=>setAmount(e.target.value)}
           value={amount}
         />
         <br></br>
