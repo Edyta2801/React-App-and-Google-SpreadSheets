@@ -20,8 +20,23 @@ function App() {
 
   const [data, setData]=useState([]);
 
+  const key = "totalAmount";
+
   const [items, setItems] = useState([]);
-  const [totalAmount, setTotalAmount]=useState([0])
+  // const [totalAmount, setTotalAmount]=useState([0])
+  // const [totalAmount, setTotalAmount]=useState(() => {
+  //   const persistedValue = window.localStorage.getItem("totalAmount");
+  //   return persistedValue !== null ? JSON.parse(persistedValue) : 0;
+  // });
+
+  const [totalAmount, setTotalAmount]=useState(
+    localStorage.getItem('totalAmount')|| 0
+  );
+
+
+  useEffect(() => {
+    localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
+    }, [totalAmount]);
 
   const handleSubmit=(e)=>{
     e.preventDefault();
@@ -68,9 +83,14 @@ function App() {
     setTotalAmount(total);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     updateTotalAmount();
   }, [items]);
+  
+  
+  useEffect(() => {
+  localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
+  }, [totalAmount]);
 
 
   return (
