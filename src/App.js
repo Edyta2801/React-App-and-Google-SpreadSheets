@@ -17,28 +17,19 @@ function App() {
   const [expense, setExpense]=useState('');
   const [amount, setAmount]=useState('');
   const [repetitive, setRepetitive]=useState(false);
-
   const [data, setData]=useState([]);
-
-  const key = "totalAmount";
-
   const [items, setItems] = useState([]);
-  // const [totalAmount, setTotalAmount]=useState([0])
-  // const [totalAmount, setTotalAmount]=useState(() => {
-  //   const persistedValue = window.localStorage.getItem("totalAmount");
-  //   return persistedValue !== null ? JSON.parse(persistedValue) : 0;
-  // });
 
-  const [totalAmount, setTotalAmount]=useState(
-    localStorage.getItem('totalAmount')|| 0
-  );
+  const [totalAmount, setTotalAmount] = useState(() => {
+    const storedTotalAmount = localStorage.getItem("totalAmount");
+    if (storedTotalAmount) {
+      return parseInt(storedTotalAmount);
+    }
+    return 0;
+  });
 
 
-  useEffect(() => {
-    localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
-    }, [totalAmount]);
-
-  const handleSubmit=(e)=>{
+  const handleSubmit=(e)=>{   
     e.preventDefault();
     
     const amount = parseInt(e.target.elements.amount.value);
@@ -49,7 +40,9 @@ function App() {
     const newItem = { amount: amount };
     setItems([...items, newItem]);
 
-    console.log(`repetitive:${repetitive}`);
+    const updatedTotal = totalAmount + amount;
+    setTotalAmount(updatedTotal);
+    localStorage.setItem("totalAmount", updatedTotal.toString())
 
     const data = {
       Category:selectedCategory,
@@ -77,20 +70,6 @@ function App() {
     if (data.length) return
     getData();
   },[])
-
-  const updateTotalAmount = () => {
-    const total = items.reduce((acc, item) => acc + item.amount, 0);
-    setTotalAmount(total);
-  };
-
-  useEffect(() => {
-    updateTotalAmount();
-  }, [items]);
-  
-  
-  useEffect(() => {
-  localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
-  }, [totalAmount]);
 
 
   return (
