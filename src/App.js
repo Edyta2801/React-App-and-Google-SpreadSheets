@@ -31,7 +31,7 @@ function App() {
 
   const handleSubmit=(e)=>{   
     e.preventDefault();
-    
+
     const amount = parseInt(e.target.elements.amount.value);
     if (isNaN(amount)) {
       return;
@@ -73,7 +73,7 @@ function App() {
 
 
   return (
-    <div className="container">
+    <div className="container-new">
       <div className='main'>
       <br></br>
       <button type='submit' className='btn btn-primary'>Wydatki: {totalAmount}</button>
@@ -102,23 +102,26 @@ function App() {
         </label>
         <br></br>
         <label>Wydatek</label>
-        <input type='text' className='form-control' required
+        <input type='text' className='form-control'  
+        pattern="(^[a-zA-Z]*$)"
+        required
           placeholder='Wydatek'
            onChange={(e)=>setExpense(e.target.value)}
           value={expense}
         />
         <br></br>
         <label>Kwota</label>
-        <input type='number' className='form-control' name='amount' required
+        <input type='number' className='form-control' name='amount'  min="1" required
           placeholder='Kwota' 
           onChange={(e)=>setAmount(e.target.value)}
           value={amount}
         />
         <br></br>
-        <label>Wydatek powtarza się</label>
-        <input type='checkbox' checked={repetitive} label='Wydatek powtarza się' 
+       
+        <input className='check-box' type='checkbox' checked={repetitive} label='Wydatek powtarza się' 
         onChange={(e)=>setRepetitive(e.target.checked)}
         />
+ <label>Wydatek powtarza się</label>
         <br></br>
         <div style={{display:"flex"}}>
           <button  style={{width:'100%'}} type='submit' className='btn btn-primary'>Submit</button>
