@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import {Data} from './Components/Data'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const categories = [
   {value: 'jedzenie', label:'Jedzenie'   },
@@ -28,6 +30,17 @@ function App() {
     return 0;
   });
 
+  const notify = () => 
+  toast.info('Wydatek został dodany!', {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
 
   const handleSubmit=(e)=>{   
     e.preventDefault();
@@ -43,6 +56,9 @@ function App() {
     const updatedTotal = totalAmount + amount;
     setTotalAmount(updatedTotal);
     localStorage.setItem("totalAmount", updatedTotal.toString())
+
+    notify()
+
 
     const data = {
       Category:selectedCategory,
@@ -88,6 +104,7 @@ function App() {
       </div>
       <form autoComplete="off" className='form-group'
       onSubmit={handleSubmit}>
+        <ToastContainer />
            <br></br>
         <label style={{display:'block'}}>Kategoria
         <select 
