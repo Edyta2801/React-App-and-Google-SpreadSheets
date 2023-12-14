@@ -39,7 +39,7 @@ function App() {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    theme: "light",
+    theme: "colored",
     });
 
   const handleSubmit=(e)=>{   
@@ -85,7 +85,7 @@ function App() {
   useEffect(()=>{
     if (data.length) return
     getData();
-  },[])
+  },[data.length])
 
 
   return (
