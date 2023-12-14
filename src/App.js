@@ -144,7 +144,7 @@ function App() {
           <button  style={{width:'100%'}} type='submit' className='btn btn-primary'>Submit</button>
         </div>
       </form>
-      <div className='view-data'>
+      {/* <div className='view-data'>
         {data.length<1&&<>No data to show</>}
         {data.length>0&&(
           <div className='table-responsive'>
@@ -164,7 +164,7 @@ function App() {
             </table>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
