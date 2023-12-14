@@ -120,7 +120,7 @@ function App() {
         <br></br>
         <label>Wydatek</label>
         <input type='text' className='form-control'  
-        pattern="(^[a-zA-Z]*$)"
+        pattern='.match(/[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]/g'
         required
           placeholder='Wydatek'
            onChange={(e)=>setExpense(e.target.value)}
