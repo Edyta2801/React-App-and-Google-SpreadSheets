@@ -18,9 +18,6 @@ function App() {
   const [selectedCategory, setSelectedCategory]=useState('jedzenie')
   const [expense, setExpense]=useState('');
   const [amount, setAmount]=useState('');
-  
-
- 
  
   const [data, setData]=useState([]);
   const [items, setItems] = useState([]);
@@ -95,7 +92,6 @@ function App() {
     getData();
   },[data.length])
 
-
   return (
     <div className="container-new">
       <div className='main'>
@@ -128,7 +124,8 @@ function App() {
         <br></br>
         <label>Wydatek</label>
         <input type='text' className='form-control'  
-        pattern='.match(/[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]/g'
+        pattern='^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]*$'
+
         required
           placeholder='Wydatek'
            onChange={(e)=>setExpense(e.target.value)}
