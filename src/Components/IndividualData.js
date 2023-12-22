@@ -7,7 +7,6 @@ export const IndividualData = ({individualData,index}) => {
             <th>{individualData.Category} </th>
             <th>{individualData.Expense} </th>
             <th>{individualData.Amount}</th>
-            <th>{individualData.Repetitive}</th>
         </tr>
     )
 }

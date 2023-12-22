@@ -18,7 +18,10 @@ function App() {
   const [selectedCategory, setSelectedCategory]=useState('jedzenie')
   const [expense, setExpense]=useState('');
   const [amount, setAmount]=useState('');
-  const [repetitive, setRepetitive]=useState(false);
+  
+
+ 
+ 
   const [data, setData]=useState([]);
   const [items, setItems] = useState([]);
 
@@ -29,6 +32,8 @@ function App() {
     }
     return 0;
   });
+
+
 
   const notify = () => 
   toast.info('Wydatek został dodany!', {
@@ -41,6 +46,7 @@ function App() {
     progress: undefined,
     theme: "colored",
     });
+
 
   const handleSubmit=(e)=>{   
     e.preventDefault();
@@ -57,27 +63,29 @@ function App() {
     setTotalAmount(updatedTotal);
     localStorage.setItem("totalAmount", updatedTotal.toString())
 
+
+
     notify()
 
 
-    const data = {
+    const data = [{
       Category:selectedCategory,
       Expense:expense,
       Amount:amount,
-      Repetitive:repetitive,
-    }
-    axios.post('https://sheet.best/api/sheets/2cf5fbf5-0ec3-44ce-b534-21b7a58460a6',data).then(response=>{
-      console.log(response);
+    }]
+   
+      axios.post('https://api.steinhq.com/v1/storages/65859b6584e6cb2495518c43/Arkusz1', data).then(response=>{
+  
+    console.log(response);
       setSelectedCategory('');
       setExpense('');
       setAmount('');
-      setRepetitive('');
     })
   }
 
   const getData=()=>{
-    axios.get('https://sheet.best/api/sheets/2cf5fbf5-0ec3-44ce-b534-21b7a58460a6').then((response)=>{
-      setData(response.data);
+      axios.get('https://api.steinhq.com/v1/storages/65859b6584e6cb2495518c43/Arkusz1').then((response)=>{ 
+    setData(response.data);
       console.log(response.data)
     })
   }
@@ -135,8 +143,8 @@ function App() {
         />
         <br></br>
        
-        <input className='check-box' type='checkbox' checked={repetitive} label='Wydatek powtarza się' 
-        onChange={(e)=>setRepetitive(e.target.checked)}
+        <input className='check-box' type='checkbox' label='Wydatek powtarza się' 
+        onChange={(e)=>(e.target.checked)}
         />
  <label>Wydatek powtarza się</label>
         <br></br>
@@ -144,7 +152,7 @@ function App() {
           <button  style={{width:'100%'}} type='submit' className='btn btn-primary'>Submit</button>
         </div>
       </form>
-      {/* <div className='view-data'>
+      <div className='view-data'>
         {data.length<1&&<>No data to show</>}
         {data.length>0&&(
           <div className='table-responsive'>
@@ -164,7 +172,7 @@ function App() {
             </table>
           </div>
         )}
-      </div> */}
+      </div>
     </div>
   );
 }
