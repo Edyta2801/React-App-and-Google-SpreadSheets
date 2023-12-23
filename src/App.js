@@ -30,6 +30,9 @@ function App() {
     return 0;
   });
 
+  const [options, setOptions] = useState(
+    JSON.parse(localStorage.getItem('options')) || []
+  );
 
 
   const notify = () => 
@@ -61,6 +64,10 @@ function App() {
     localStorage.setItem("totalAmount", updatedTotal.toString())
 
 
+    const newOptions = [...options, expense];
+    localStorage.setItem('options', JSON.stringify(newOptions));
+    setOptions(newOptions);
+    setExpense('');
 
     notify()
 
@@ -125,12 +132,17 @@ function App() {
         <label>Wydatek</label>
         <input type='text' className='form-control'  
         pattern='^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]*$'
-
+        list="optionsList"
         required
           placeholder='Wydatek'
            onChange={(e)=>setExpense(e.target.value)}
           value={expense}
         />
+        <datalist id="optionsList">
+        {options.map((option, index) => (
+          <option key={index} value={option} />
+        ))}
+      </datalist>
         <br></br>
         <label>Kwota</label>
         <input type='number' className='form-control' name='amount'  min="1" required
@@ -143,7 +155,7 @@ function App() {
         <input className='check-box' type='checkbox' label='Wydatek powtarza się' 
         onChange={(e)=>(e.target.checked)}
         />
- <label>Wydatek powtarza się</label>
+        <label>Wydatek powtarza się</label>
         <br></br>
         <div style={{display:"flex"}}>
           <button  style={{width:'100%'}} type='submit' className='btn btn-primary'>Submit</button>
