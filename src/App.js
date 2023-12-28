@@ -18,7 +18,7 @@ function App() {
   const [selectedCategory, setSelectedCategory]=useState('jedzenie')
   const [expense, setExpense]=useState('');
   const [amount, setAmount]=useState('');
- 
+  const [addToLocalStorage, setAddToLocalStorage] = useState(false);
   const [data, setData]=useState([]);
   const [items, setItems] = useState([]);
 
@@ -47,6 +47,10 @@ function App() {
     theme: "colored",
     });
 
+  const handleCheckboxChange = () => {
+      setAddToLocalStorage(!addToLocalStorage);
+  };
+
 
   const handleSubmit=(e)=>{   
     e.preventDefault();
@@ -65,8 +69,11 @@ function App() {
 
 
     const newOptions = [...options, expense];
-    localStorage.setItem('options', JSON.stringify(newOptions));
     setOptions(newOptions);
+    if (addToLocalStorage) {
+      localStorage.setItem('options', JSON.stringify(newOptions));
+    }
+
     setExpense('');
 
     notify()
@@ -153,7 +160,8 @@ function App() {
         <br></br>
        
         <input className='check-box' type='checkbox' label='Wydatek powtarza się' 
-        onChange={(e)=>(e.target.checked)}
+       checked={addToLocalStorage}
+       onChange={handleCheckboxChange}
         />
         <label>Wydatek powtarza się</label>
         <br></br>
